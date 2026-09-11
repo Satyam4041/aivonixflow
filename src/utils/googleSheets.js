@@ -10,10 +10,10 @@
  * 3. Contact & Consultation -> Sheet3 (or tab "Contact")
  */
 
-// Deployment Web App URL (Configurable via .env or fallback)
+// Deployed Live Google Apps Script Webhook URL
 const GOOGLE_SCRIPT_URL = 
   import.meta.env.VITE_GOOGLE_SHEETS_SCRIPT_URL || 
-  "https://script.google.com/macros/s/AKfycbwU96sZ3qGvY9W12-placeholder/exec";
+  "https://script.google.com/macros/s/AKfycbwNXJEBB5gUAlBwkxROO8pcNSrixBjD9h3MmUKELhU0p51m4decgXiwWGFIqVWEhSNF/exec";
 
 export const GOOGLE_SHEET_LINK = 
   "https://docs.google.com/spreadsheets/d/1lYWfzKmD0BHUwNnIf_LoL0pf0ZQV8V-836vWddDCurw/edit?usp=sharing";
@@ -42,8 +42,8 @@ export async function submitToGoogleSheet(sheetTab, payload) {
     // Ignore storage errors
   }
 
-  // 2. Dispatch to Google Apps Script Endpoint if available
-  const endpoint = import.meta.env.VITE_GOOGLE_SHEETS_SCRIPT_URL;
+  // 2. Dispatch to Google Apps Script Endpoint
+  const endpoint = GOOGLE_SCRIPT_URL;
   if (endpoint && endpoint.startsWith("https://script.google.com")) {
     try {
       await fetch(endpoint, {
