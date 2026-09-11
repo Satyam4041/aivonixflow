@@ -1,26 +1,28 @@
 /**
+ * @OnlyCurrentDoc
  * ============================================================================
- * AIVONIXFLOW — GOOGLE APPS SCRIPT FOR AUTOMATIC GOOGLE SHEETS FORM SYNC
+ * AIVONIXFLOW — ENTERPRISE HARDENED GOOGLE APPS SCRIPT (MINIMAL SCOPE)
  * ============================================================================
  * Target Spreadsheet:
  * https://docs.google.com/spreadsheets/d/1lYWfzKmD0BHUwNnIf_LoL0pf0ZQV8V-836vWddDCurw/edit
  * 
- * INSTRUCTIONS TO ACTIVATE IN 60 SECONDS:
- * 1. Open your Google Sheet: https://docs.google.com/spreadsheets/d/1lYWfzKmD0BHUwNnIf_LoL0pf0ZQV8V-836vWddDCurw/edit
- * 2. In top menu click: Extensions -> Apps Script
- * 3. Delete any default code in Code.gs, and paste THIS ENTIRE FILE.
- * 4. Click the blue "Deploy" button (top right) -> "New deployment"
- * 5. Click the gear icon (Select type) -> select "Web app"
- * 6. Set Description: "AivonixFlow Form Webhook"
- * 7. Set "Execute as": "Me"
- * 8. Set "Who has access": "Anyone"  <-- CRITICAL!
- * 9. Click "Deploy", authorize permissions when asked.
- * 10. Copy the "Web app URL" (it looks like: https://script.google.com/macros/s/AKfycb.../exec)
- * 11. Put that URL into your .env file:
- *     VITE_GOOGLE_SHEETS_SCRIPT_URL="YOUR_COPIED_URL_HERE"
+ * Note: "@OnlyCurrentDoc" enforces strict security so this script can ONLY
+ * access THIS specific Google Sheet and has ZERO access to the rest of your Drive.
  * ============================================================================
  */
 
+// Health check endpoint (for testing in browser)
+function doGet(e) {
+  return ContentService.createTextOutput(
+    JSON.stringify({ 
+      status: "active", 
+      service: "AivonixFlow Secure Webhook",
+      timestamp: new Date().toISOString()
+    })
+  ).setMimeType(ContentService.MimeType.JSON);
+}
+
+// Main webhook receiver
 function doPost(e) {
   var lock = LockService.getScriptLock();
   lock.tryLock(10000);
@@ -29,26 +31,25 @@ function doPost(e) {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     var data = {};
 
-    // Parse incoming payload
-    if (e.postData && e.postData.contents) {
+    if (e && e.postData && e.postData.contents) {
       try {
         data = JSON.parse(e.postData.contents);
       } catch (err) {
         data = e.parameter || {};
       }
-    } else {
-      data = e.parameter || {};
+    } else if (e && e.parameter) {
+      data = e.parameter;
     }
 
     var sheetTarget = data.sheet || "Sheet1";
-    var timestamp = data.timestamp || new Date().toISOString();
+    var timestamp = data.timestamp || Utilities.formatDate(new Date(), "Asia/Kolkata", "yyyy-MM-dd HH:mm:ss");
 
     // -------------------------------------------------------------
-    // SHEET 1: GET A QUOTE
+    // SHEET 1: GET A CUSTOM QUOTE FORM (/get-quote)
     // -------------------------------------------------------------
     if (sheetTarget === "Sheet1" || sheetTarget === "Get Quote") {
       var sheet1 = getOrCreateSheet(ss, "Sheet1 - Get Quote", [
-        "Timestamp",
+        "Timestamp (IST)",
         "Full Name",
         "Work Email",
         "Company Name",
@@ -69,11 +70,11 @@ function doPost(e) {
     }
 
     // -------------------------------------------------------------
-    // SHEET 2: FREE AUDIT
+    // SHEET 2: FREE AI AUDIT FORM (/free-audit)
     // -------------------------------------------------------------
     else if (sheetTarget === "Sheet2" || sheetTarget === "Free Audit") {
       var sheet2 = getOrCreateSheet(ss, "Sheet2 - Free Audit", [
-        "Timestamp",
+        "Timestamp (IST)",
         "Full Name",
         "Work Email",
         "Website URL",
@@ -92,15 +93,15 @@ function doPost(e) {
     }
 
     // -------------------------------------------------------------
-    // SHEET 3: CONTACT & CONSULTATION
+    // SHEET 3: CONTACT & CONSULTATION FORM (/contact)
     // -------------------------------------------------------------
     else if (sheetTarget === "Sheet3" || sheetTarget === "Contact") {
       var sheet3 = getOrCreateSheet(ss, "Sheet3 - Contact", [
-        "Timestamp",
+        "Timestamp (IST)",
         "Name",
         "Work Email",
         "Service of Interest",
-        "Message / Current Bottleneck"
+        "Message / Project Details"
       ]);
 
       sheet3.appendRow([
@@ -113,12 +114,19 @@ function doPost(e) {
     }
 
     return ContentService.createTextOutput(
-      JSON.stringify({ status: "success", message: "Row added successfully to " + sheetTarget })
+      JSON.stringify({ 
+        status: "success", 
+        message: "Entry recorded in " + sheetTarget,
+        receivedAt: timestamp 
+      })
     ).setMimeType(ContentService.MimeType.JSON);
 
   } catch (error) {
     return ContentService.createTextOutput(
-      JSON.stringify({ status: "error", error: error.toString() })
+      JSON.stringify({ 
+        status: "error", 
+        error: error.toString() 
+      })
     ).setMimeType(ContentService.MimeType.JSON);
 
   } finally {
@@ -127,7 +135,7 @@ function doPost(e) {
 }
 
 /**
- * Helper function: Gets an existing sheet tab or creates it with formatted headers
+ * Creates sheet tab if not present, styles header with dark theme
  */
 function getOrCreateSheet(ss, sheetName, headers) {
   var sheet = ss.getSheetByName(sheetName);
@@ -136,16 +144,15 @@ function getOrCreateSheet(ss, sheetName, headers) {
     sheet = ss.insertSheet(sheetName);
     sheet.appendRow(headers);
     
-    // Style headers
+    // Executive dark blue styling for headers
     var headerRange = sheet.getRange(1, 1, 1, headers.length);
     headerRange.setFontWeight("bold");
     headerRange.setBackground("#0F172A");
     headerRange.setFontColor("#38BDF8");
     sheet.setFrozenRows(1);
     
-    // Auto-adjust column widths
     for (var i = 1; i <= headers.length; i++) {
-      sheet.setColumnWidth(i, 180);
+      sheet.setColumnWidth(i, 200);
     }
   }
   
