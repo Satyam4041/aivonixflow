@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Mail, Phone, MapPin, Send, Sparkles, CheckCircle2, Clock, Lock, ShieldCheck, AlertCircle } from "lucide-react";
+import { Mail, MapPin, Send, Sparkles, CheckCircle2, Clock, Lock, ShieldCheck, AlertCircle } from "lucide-react";
 import { sanitizeInput, isValidEmail, checkRateLimit, isSpamBot } from "../utils/security";
+import { submitToGoogleSheet } from "../utils/googleSheets";
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -45,6 +46,16 @@ export default function ContactPage() {
       return;
     }
 
+    const payload = {
+      name: cleanName,
+      email: cleanEmail,
+      service: formData.service,
+      message: cleanMessage,
+    };
+
+    // Submit directly to Google Sheet 3
+    submitToGoogleSheet("Sheet3", payload);
+
     setSubmitted(true);
   };
 
@@ -85,24 +96,11 @@ export default function ContactPage() {
               </div>
 
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-brand-surface border border-white/10 flex items-center justify-center text-brand-purple">
-                  <Phone className="w-4 h-4" />
-                </div>
-                <div>
-                  <div className="text-xs text-slate-400">Call / WhatsApp</div>
-                  <a href="tel:+919839267057" className="font-medium text-white hover:text-brand-cyan">
-                    +1 (983) 926-7057
-                  </a>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-brand-surface border border-white/10 flex items-center justify-center text-brand-blue">
                   <MapPin className="w-4 h-4" />
                 </div>
                 <div>
                   <div className="text-xs text-slate-400">Headquarters</div>
-                  {/* TODO: Update with official location */}
                   <span className="font-medium text-white">San Francisco, CA & Global Remote</span>
                 </div>
               </div>

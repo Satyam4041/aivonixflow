@@ -13,6 +13,7 @@ import {
   AlertCircle
 } from "lucide-react";
 import { sanitizeInput, isValidEmail, checkRateLimit, isSpamBot } from "../utils/security";
+import { submitToGoogleSheet } from "../utils/googleSheets";
 
 export default function FreeAuditPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -59,6 +60,17 @@ export default function FreeAuditPage() {
       setSecurityError("Please enter a valid work email address.");
       return;
     }
+
+    const payload = {
+      fullName: cleanName,
+      workEmail: cleanEmail,
+      websiteUrl: cleanUrl,
+      businessType: cleanType,
+      biggestChallenge: cleanChallenge,
+    };
+
+    // Submit directly to Google Sheet 2
+    submitToGoogleSheet("Sheet2", payload);
 
     setSubmitted(true);
   };

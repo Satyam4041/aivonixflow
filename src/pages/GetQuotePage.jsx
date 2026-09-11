@@ -13,6 +13,7 @@ import {
   AlertCircle
 } from "lucide-react";
 import { sanitizeInput, isValidEmail, checkRateLimit, isSpamBot } from "../utils/security";
+import { submitToGoogleSheet } from "../utils/googleSheets";
 
 export default function GetQuotePage() {
   const [submitted, setSubmitted] = useState(false);
@@ -33,7 +34,6 @@ export default function GetQuotePage() {
 
     // 1. Bot Honeypot Defense
     if (isSpamBot(honeypot)) {
-      // Silently simulate success for bots without saving or processing
       setSubmitted(true);
       return;
     }
@@ -69,8 +69,10 @@ export default function GetQuotePage() {
       projectType: formData.projectType,
       estimatedBudget: formData.estimatedBudget,
       projectDetails: cleanDetails,
-      timestamp: new Date().toISOString(),
     };
+
+    // Submit directly to Google Sheet 1
+    submitToGoogleSheet("Sheet1", sanitizedPayload);
 
     setSubmitted(true);
   };
