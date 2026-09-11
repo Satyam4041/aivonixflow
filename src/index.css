@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    background-color: #060911;
+    color: #F8FAFC;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+
+  body {
+    background-color: #060911;
+    color: #F8FAFC;
+    min-height: 100vh;
+    overflow-x: hidden;
+    selection-background-color: #38BDF8;
+    selection-color: #0A0E17;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: -0.025em;
+  }
+  
+  code, pre {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+@layer utilities {
+  /* Gradients */
+  .text-gradient {
+    background: linear-gradient(135deg, #38BDF8 0%, #3B82F6 30%, #818CF8 70%, #C084FC 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-cyan {
+    background: linear-gradient(135deg, #FFFFFF 0%, #7DD3FC 40%, #0284C7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-purple {
+    background: linear-gradient(135deg, #C084FC 0%, #A855F7 50%, #6366F1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Futuristic Cyber Grid Background */
+  .bg-grid-pattern {
+    background-size: 40px 40px;
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  }
+
+  .bg-dot-pattern {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* Glassmorphism surfaces */
+  .glass-nav {
+    background: rgba(6, 9, 17, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-card {
+    background: linear-gradient(145deg, rgba(17, 24, 39, 0.6) 0%, rgba(10, 15, 29, 0.8) 100%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.7);
+  }
+
+  .glass-card-interactive {
+    background: linear-gradient(145deg, rgba(17, 24, 39, 0.6) 0%, rgba(10, 15, 29, 0.8) 100%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .glass-card-interactive:hover {
+    transform: translateY(-4px);
+    border-color: rgba(56, 189, 248, 0.4);
+    box-shadow: 0 25px 50px -15px rgba(56, 189, 248, 0.15), 0 0 25px -5px rgba(129, 140, 248, 0.2);
+  }
+
+  .glass-pill {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Radiant Glow Elements */
+  .glow-cyan {
+    box-shadow: 0 0 50px -10px rgba(56, 189, 248, 0.35);
+  }
+
+  .glow-purple {
+    box-shadow: 0 0 50px -10px rgba(168, 85, 247, 0.35);
+  }
+
+  /* Gradient border button / card */
+  .gradient-border {
+    position: relative;
+    border-radius: inherit;
+  }
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.6), rgba(129, 140, 248, 0.3), rgba(192, 132, 252, 0.6));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #060911;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #38bdf8;
+}
+
+/* Shimmer animation */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+.animate-shimmer {
+  animation: shimmer 3s infinite linear;
+}
