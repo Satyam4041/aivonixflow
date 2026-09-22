@@ -25,6 +25,7 @@ import {
   ROUTES,
   INDEXABLE_ROUTES,
   AI_CRAWLERS,
+  SOCIAL_PROFILES,
   NOT_FOUND_META,
   absoluteUrl,
 } from "../src/seo/siteConfig.js";
@@ -181,6 +182,10 @@ function llmsTxt() {
     `${SITE.name} is a B2B agency building AI automation, custom CRM systems,`,
     "bespoke software, high-performance websites, data analytics and AI-era",
     `digital marketing. Contact: ${SITE.email}. Area served: ${SITE.areaServed}.`,
+    "",
+    "## Official profiles",
+    "",
+    ...SOCIAL_PROFILES.map((profile) => `- ${profile.name}: ${profile.url}`),
     "",
     "## Pages",
     "",

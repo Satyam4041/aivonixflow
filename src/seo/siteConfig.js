@@ -26,6 +26,25 @@ export const SITE = {
 };
 
 /**
+ * Verified profile URLs, used for Organization.sameAs and the footer.
+ *
+ * These must be canonical profile URLs, not share links: a facebook.com/share/
+ * link is a redirect, and sameAs is how Google confirms these profiles and the
+ * site are the same entity. Any tracking or share token is stripped — those are
+ * per-session and do not belong in source control.
+ */
+export const SOCIAL_PROFILES = [
+  {
+    name: "Facebook",
+    url: "https://www.facebook.com/people/Aivonix-Technologies/61594847931664/",
+  },
+  {
+    name: "Instagram",
+    url: "https://www.instagram.com/aivonix_technologies/",
+  },
+];
+
+/**
  * Crawlers that power answer engines. Explicitly allowed: being cited in an AI
  * answer requires being readable by the bot that builds the index.
  */

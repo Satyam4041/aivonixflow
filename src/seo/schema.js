@@ -8,7 +8,7 @@
  * Pure data, same constraint as siteConfig.js: no React, no browser globals.
  */
 
-import { SITE, absoluteUrl } from "./siteConfig.js";
+import { SITE, SOCIAL_PROFILES, absoluteUrl } from "./siteConfig.js";
 
 const ORG_ID = `${SITE.origin}/#organization`;
 const WEBSITE_ID = `${SITE.origin}/#website`;
@@ -31,6 +31,9 @@ export function organizationSchema() {
       caption: SITE.name,
     },
     image: { "@id": `${SITE.origin}/#logo` },
+    // Links the site to its verified profiles so search and answer engines
+    // resolve all of them to one entity.
+    sameAs: SOCIAL_PROFILES.map((profile) => profile.url),
     areaServed: SITE.areaServed,
     contactPoint: [
       {
