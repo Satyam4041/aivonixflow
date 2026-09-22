@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/seo-build.mjs",
+    "build:app": "vite build",
+    "build:seo": "node scripts/seo-build.mjs",
     "lint": "oxlint",
     "preview": "vite preview"
   },

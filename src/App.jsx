@@ -16,6 +16,7 @@ import ContactPage from "./pages/ContactPage";
 import GetQuotePage from "./pages/GetQuotePage";
 import FreeAuditPage from "./pages/FreeAuditPage";
 import SecurityPage from "./pages/SecurityPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -136,12 +137,12 @@ function AnimatedRoutes() {
               </PageTransition>
             }
           />
-          {/* Catch-all fallback */}
+          {/* Catch-all: a real 404, not the homepage — see NotFoundPage. */}
           <Route
             path="*"
             element={
               <PageTransition>
-                <HomePage />
+                <NotFoundPage />
               </PageTransition>
             }
           />
