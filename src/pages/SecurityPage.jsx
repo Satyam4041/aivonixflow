@@ -98,22 +98,32 @@ export default function SecurityPage() {
             Regulatory Compliance
           </h2>
           <p className="text-sm text-slate-400 leading-relaxed">
-            Architectures aligned with SOC-2 Type II standards, ISO 27001 operational frameworks, GDPR right-to-erasure workflows, and HIPAA-ready healthcare CRM partitions.
+            Systems are built to the controls these frameworks describe: SOC-2
+            style audit trails, GDPR right-to-erasure workflows, and data
+            partitioning suitable for healthcare records.
           </p>
           <ul className="text-xs text-slate-300 space-y-2 pt-2 border-t border-white/10">
             <li className="flex items-center gap-2">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span>GDPR & CCPA Data Rights Compliance</span>
+              <span>GDPR & CCPA data-rights workflows</span>
             </li>
             <li className="flex items-center gap-2">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span>HIPAA BAA Agreements for Healthcare</span>
+              <span>HIPAA-aware data partitioning</span>
             </li>
             <li className="flex items-center gap-2">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span>SOC-2 Aligned Audit Trails & Logging</span>
+              <span>Audit trails & logging on every write</span>
             </li>
           </ul>
+          {/* Stated plainly rather than implied: describing practices as
+              certifications is the kind of claim buyers check. */}
+          <p className="text-[11px] text-slate-500 leading-relaxed pt-3 border-t border-white/10">
+            AivonixFlow is not currently SOC-2 or ISO 27001 certified. These
+            describe the controls we build to, not audits we hold. If your
+            procurement requires a signed BAA or a certified vendor, tell us
+            early so we can scope it honestly.
+          </p>
         </div>
 
         {/* Pillar 4: IAM & Access Control */}
@@ -184,15 +194,18 @@ export default function SecurityPage() {
           <ul className="text-xs text-slate-300 space-y-2 pt-2 border-t border-white/10">
             <li className="flex items-center gap-2">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span>0 Known Vulnerabilities in Dependencies</span>
+              <span>Dependencies audited before every release</span>
             </li>
             <li className="flex items-center gap-2">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
               <span>Strict CSP & Injection Defense</span>
             </li>
+            {/* Was "99.99% Uptime Guarantee with SLA". An uptime guarantee is a
+                contractual commitment with penalties, not a marketing line —
+                it belongs in a signed agreement, per project. */}
             <li className="flex items-center gap-2">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span>99.99% Uptime Guarantee with SLA</span>
+              <span>Uptime targets agreed per project, in writing</span>
             </li>
           </ul>
         </div>

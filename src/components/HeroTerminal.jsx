@@ -15,13 +15,13 @@ const scenarios = {
   leads: {
     title: "Autonomous Lead Routing",
     target: "Salesforce + HubSpot Sync",
-    badge: "99.8% Precision",
+    badge: "Lead Routing Demo",
     logs: [
-      { time: "00:01", type: "trigger", text: "[EVENT] Webhook received: Enterprise trial request from Fortune 500 domain" },
+      { time: "00:01", type: "trigger", text: "[EVENT] Webhook received: Enterprise trial request received" },
       { time: "00:02", type: "ai", text: "[AGENT] Ingesting company headcount, tech stack, and annual ARR signals" },
-      { time: "00:03", type: "eval", text: "[EVAL] Neural Scoring: Fit Score: 98.6/100 -> Routed to Tier-1 Enterprise AE" },
+      { time: "00:03", type: "eval", text: "[EVAL] Scored against fit rules -> routed to enterprise queue" },
       { time: "00:04", type: "action", text: "[ACTION] CRM Pipeline: Opportunity created, calendar invite booked on Zoom" },
-      { time: "00:05", type: "success", text: "[COMPLETE] Workflow Finished: 1.1s latency • Manual SDR time saved: 45 min" },
+      { time: "00:05", type: "success", text: "[COMPLETE] Workflow finished — no manual data entry required" },
     ],
   },
   invoice: {
@@ -31,9 +31,9 @@ const scenarios = {
     logs: [
       { time: "00:01", type: "trigger", text: "[INGEST] PDF invoice captured via email ingestion gateway (ID: #INV-9281)" },
       { time: "00:02", type: "ai", text: "[PARSER] Vision Model: Extracted line items, tax IDs, banking IBAN & totals" },
-      { time: "00:03", type: "eval", text: "[MATCH] Three-Way Match: Matched against Purchase Order #PO-4412 (100% match)" },
+      { time: "00:03", type: "eval", text: "[MATCH] Three-Way Match: Matched against Purchase Order #PO-4412" },
       { time: "00:04", type: "action", text: "[ERP] ERP Dispatch: Scheduled ACH payment approval & reconciled in books" },
-      { time: "00:05", type: "success", text: "[COMPLETE] Workflow Finished: 0.9s latency • Error rate: 0.00%" },
+      { time: "00:05", type: "success", text: "[COMPLETE] Workflow finished — low-confidence fields flagged for review" },
     ],
   },
   support: {
@@ -45,7 +45,7 @@ const scenarios = {
       { time: "00:02", type: "ai", text: "[VECTOR] Knowledge Retrieval: Retrieved relevant enterprise API documentation snippets" },
       { time: "00:03", type: "eval", text: "[SANDBOX] Code Sandbox: Agent generated and validated sample Node.js config block" },
       { time: "00:04", type: "action", text: "[DISPATCH] Response Sent: Complete explanation & code snippet returned in chat" },
-      { time: "00:05", type: "success", text: "[COMPLETE] Ticket Resolved autonomously: Customer CSAT: 5/5 (Verified)" },
+      { time: "00:05", type: "success", text: "[COMPLETE] Ticket resolved autonomously — escalation path available" },
     ],
   },
 };
@@ -170,14 +170,15 @@ export default function HeroTerminal() {
         )}
       </div>
 
-      {/* Terminal Footer Metrics */}
-      <div className="px-5 py-3 bg-brand-surface/40 border-t border-white/5 flex flex-wrap items-center justify-between text-xs text-slate-400">
-        <div className="flex items-center gap-4">
-          <span>Avg. Latency: <strong className="text-white font-mono">1.1s</strong></span>
-          <span>Success Rate: <strong className="text-emerald-400 font-mono">99.98%</strong></span>
-        </div>
+      {/* Terminal footer. The latency and success-rate figures that sat here
+          read as measured results from a live system; this is an illustration,
+          so it now says so instead. */}
+      <div className="px-5 py-3 bg-brand-surface/40 border-t border-white/5 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
+        <span className="text-[11px]">
+          Illustrative example — not a recording of a live customer workflow
+        </span>
         <div className="text-[11px] text-brand-cyan flex items-center gap-1 font-semibold">
-          <span>Fully Autonomous Pipeline</span>
+          <span>Shape of a real pipeline</span>
           <CheckCircle2 className="w-3.5 h-3.5" />
         </div>
       </div>

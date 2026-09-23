@@ -346,10 +346,10 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <h2 className="text-2xl sm:text-4xl font-extrabold text-white font-heading">
-              Numbers That Speak For <span className="text-gradient">Themselves</span>
+              What Working With Us <span className="text-gradient">Actually Means</span>
             </h2>
             <p className="text-slate-400 text-xs sm:text-sm mt-2">
-              Quantifiable operational velocity delivered to our client partners.
+              Commitments that hold on every engagement, not averages from past ones.
             </p>
           </div>
 
@@ -363,14 +363,14 @@ export default function HomePage() {
           <div className="text-center max-w-3xl mx-auto mb-14">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full glass-pill border border-white/10 text-xs font-semibold text-brand-cyan mb-3">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Client Success Stories</span>
+              <span>How Engagements Run</span>
             </div>
             <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight font-heading">
-              Loved by Founders & <br />
-              <span className="text-gradient">Revenue Leaders</span>
+              From First Call to <br />
+              <span className="text-gradient">Running System</span>
             </h2>
             <p className="text-slate-400 text-sm sm:text-base mt-4 max-w-2xl mx-auto">
-              Real results from operations teams who chose autonomous workflows over manual drudgery.
+              Three phases, what you receive at each, and the constraints we state up front rather than after the invoice.
             </p>
           </div>
 
@@ -440,7 +440,7 @@ export default function HomePage() {
                   <span>View Security Whitepaper</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
-                <span className="text-xs text-slate-400">HIPAA, GDPR & CCPA compliant architectures</span>
+                <span className="text-xs text-slate-400">Architectures designed around HIPAA, GDPR & CCPA requirements</span>
               </div>
             </div>
           </div>

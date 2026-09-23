@@ -1,42 +1,42 @@
-import { useState, useEffect, useRef } from "react";
-import { Clock, TrendingUp, ShieldCheck, Zap } from "lucide-react";
+import { Clock, KeyRound, UserCheck, Wallet } from "lucide-react";
 
+/**
+ * These were previously achievement metrics — hours saved, pipeline value,
+ * accuracy rate, average deployment time — none of which had been measured.
+ *
+ * Each tile now states something true by construction rather than by track
+ * record: a property of how AivonixFlow builds and licenses, not a claim about
+ * past results. That keeps them accurate no matter how many projects are
+ * behind them, and they are the things buyers actually compare.
+ */
 const stats = [
   {
-    value: 45000,
-    suffix: "+",
-    label: "Payroll Hours Saved",
-    description: "Eliminated from manual data entry, lead routing, and report generation.",
-    icon: Clock,
-    color: "text-brand-cyan",
+    value: "0",
+    suffix: "",
+    label: "Per-Seat Licence Fees",
+    description: "Custom builds are bought once, not rented. Adding staff does not raise the cost.",
+    icon: Wallet,
   },
   {
-    value: 2.8,
-    prefix: "$",
-    suffix: "M+",
-    label: "Net Pipeline Value Unlocked",
-    description: "Recaptured through instantaneous lead responses and automated renewals.",
-    icon: TrendingUp,
-    color: "text-emerald-400",
-    isFloat: true,
-  },
-  {
-    value: 99.8,
+    value: "100",
     suffix: "%",
-    label: "Autonomous Accuracy",
-    description: "Near-zero hallucination rates across multi-agent enterprise workflows.",
-    icon: ShieldCheck,
-    color: "text-brand-purple",
-    isFloat: true,
+    label: "Source Code Ownership",
+    description: "You own what we build, so you are never locked into us to run or extend it.",
+    icon: KeyRound,
   },
   {
-    value: 14,
-    prefix: "< ",
-    suffix: " Days",
-    label: "Avg. Production Deployment",
-    description: "From discovery call to fully functional, live-tested enterprise automation.",
-    icon: Zap,
-    color: "text-amber-400",
+    value: "2–4",
+    suffix: " wks",
+    label: "First Workflow Live",
+    description: "A focused automation ships in weeks. Multi-department platforms take six to twelve.",
+    icon: Clock,
+  },
+  {
+    value: "Always",
+    suffix: "",
+    label: "Human Escalation",
+    description: "Low-confidence cases route to a person instead of being answered with a guess.",
+    icon: UserCheck,
   },
 ];
 
@@ -58,12 +58,13 @@ export default function StatsSection() {
                 <span className="w-2 h-2 rounded-full bg-brand-cyan/60 animate-pulse"></span>
               </div>
 
-              <div className="text-3xl sm:text-4xl font-black text-white font-mono tracking-tight mb-2 flex items-baseline">
-                {item.prefix}
-                <span className="text-gradient font-black">
-                  {item.isFloat ? item.value : item.value.toLocaleString()}
-                </span>
-                <span className="text-white font-black">{item.suffix}</span>
+              <div className="text-3xl sm:text-4xl font-black text-white font-mono tracking-tight mb-2 flex items-baseline flex-wrap">
+                <span className="text-gradient font-black">{item.value}</span>
+                {item.suffix && (
+                  <span className="text-white font-black text-2xl sm:text-3xl">
+                    {item.suffix}
+                  </span>
+                )}
               </div>
 
               <div className="text-sm font-bold text-slate-200 font-heading mb-1.5">

@@ -135,7 +135,7 @@ const PAGE_ROUTES = [
       type: "Business Process Automation",
     },
     summary:
-      "Custom autonomous AI agents, fine-tuned enterprise LLM pipelines and cognitive integrations. Includes goal-directed LLM agents, document and invoice extraction at 99.8% precision, and 24/7 automated customer operations.",
+      "Custom autonomous AI agents, fine-tuned enterprise LLM pipelines and cognitive integrations. Includes goal-directed LLM agents, structured extraction from contracts, receipts and reports, and 24/7 automated customer operations.",
     faq: [
       {
         q: "What is an autonomous AI agent?",
@@ -147,7 +147,7 @@ const PAGE_ROUTES = [
       },
       {
         q: "How accurate is AI document and invoice processing?",
-        a: "AivonixFlow's document pipelines extract structured data from contracts, receipts and reports at around 99.8% precision. Accuracy is maintained with validation rules and confidence thresholds, so low-confidence extractions are routed to a human instead of being silently accepted.",
+        a: "Accuracy depends on document quality and how variable the formats are, so any single headline figure would be misleading. What matters more in practice is how uncertainty is handled: pipelines are built with validation rules and confidence thresholds, so low-confidence extractions are routed to a person rather than silently accepted. Expected accuracy for your own documents is measured on a sample during discovery, before anything is committed to.",
       },
       {
         q: "Will AI automation replace my staff?",

@@ -56,7 +56,7 @@ export default function AiAutomationPage() {
           },
           {
             title: "Document & Invoice Processing",
-            desc: "Extract structured data from contracts, receipts, and reports with 99.8% precision.",
+            desc: "Extract structured data from contracts, receipts, and reports — with low-confidence cases flagged for review, not guessed.",
           },
           {
             title: "Intelligent Customer Ops",

@@ -132,14 +132,24 @@ export default function RoiCalculator() {
               <div className="bg-brand-darker/60 p-4 rounded-xl border border-white/5">
                 <div className="flex items-center gap-1.5 text-xs text-emerald-400 mb-1">
                   <TrendingUp className="w-3.5 h-3.5" />
-                  <span>Efficiency Gain</span>
+                  <span>Assumed Automatable</span>
                 </div>
                 <div className="text-xl sm:text-2xl font-bold text-white font-mono">
-                  +72%
+                  72%
                 </div>
-                <div className="text-[11px] text-slate-400">capacity freed up</div>
+                <div className="text-[11px] text-slate-400">of the hours entered</div>
               </div>
             </div>
+
+            {/* The 72% was applied silently behind a confident dollar figure.
+                Stating the assumption is what makes this an estimate rather
+                than a claim. */}
+            <p className="text-[11px] text-slate-500 leading-relaxed">
+              This is a model, not a quote. It assumes 72% of the manual hours
+              you entered can be automated, which varies by process — some reach
+              higher, others far less. A figure for your own workflows comes
+              from the audit.
+            </p>
 
             <div className="pt-2">
               <Link
