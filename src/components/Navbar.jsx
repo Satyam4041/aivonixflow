@@ -191,6 +191,19 @@ export default function Navbar() {
             </NavLink>
 
             <NavLink
+              to="/blog"
+              className={({ isActive }) =>
+                `px-6 py-2.5 text-base font-semibold rounded-xl transition-all duration-200 ${
+                  isActive
+                    ? "text-white bg-white/10 shadow-sm border border-white/15"
+                    : "text-slate-300 hover:text-white hover:bg-white/[0.08]"
+                }`
+              }
+            >
+              Blog
+            </NavLink>
+
+            <NavLink
               to="/about"
               className={({ isActive }) =>
                 `px-6 py-2.5 text-base font-semibold rounded-xl transition-all duration-200 ${
@@ -295,6 +308,18 @@ export default function Navbar() {
                   ))}
                 </div>
               </div>
+
+              <Link
+                to="/blog"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`px-5 py-3.5 rounded-xl text-base font-semibold ${
+                  location.pathname.startsWith("/blog")
+                    ? "bg-brand-blue/20 text-white border border-brand-blue/40"
+                    : "text-slate-300 hover:bg-white/5"
+                }`}
+              >
+                Blog
+              </Link>
 
               <Link
                 to="/about"

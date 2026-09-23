@@ -30,6 +30,7 @@ import {
   absoluteUrl,
 } from "../src/seo/siteConfig.js";
 import { graphForRoute } from "../src/seo/schema.js";
+import { parseInline, toPlainText } from "../src/content/inline.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = join(ROOT, "dist");
@@ -46,7 +47,7 @@ const escapeJsonLd = (json) => json.replace(/</g, "\\u003c");
 
 function headFor(route) {
   const canonical = absoluteUrl(route.canonical || route.path);
-  const ogImage = `${SITE.origin}${SITE.ogImage}`;
+  const ogImage = `${SITE.origin}${route.ogImage || SITE.ogImage}`;
   const title = escapeHtml(route.title);
   const description = escapeHtml(route.description);
 
@@ -59,7 +60,7 @@ function headFor(route) {
     `<meta name="description" content="${description}" />`,
     `<link rel="canonical" href="${canonical}" />`,
     `<meta name="robots" content="${robots}" />`,
-    `<meta property="og:type" content="website" />`,
+    `<meta property="og:type" content="${route.ogType || "website"}" />`,
     `<meta property="og:site_name" content="${escapeHtml(SITE.name)}" />`,
     `<meta property="og:locale" content="${SITE.locale}" />`,
     `<meta property="og:url" content="${canonical}" />`,
@@ -72,12 +73,147 @@ function headFor(route) {
     `<meta name="twitter:image" content="${ogImage}" />`,
   ];
 
+  if (route.post) {
+    tags.push(
+      `<meta property="article:published_time" content="${route.post.datePublished}" />`,
+      `<meta property="article:modified_time" content="${route.post.dateModified}" />`
+    );
+  }
+
   if (!route.noindex) {
     const graph = escapeJsonLd(JSON.stringify(graphForRoute(route)));
     tags.push(`<script type="application/ld+json">${graph}</script>`);
   }
 
   return tags.map((tag) => `    ${tag}`).join("\n");
+}
+
+/** Inline markup rendered to HTML, mirroring PostBody.jsx's <Inline />. */
+function inlineToHtml(text) {
+  return parseInline(text)
+    .map((token) => {
+      if (token.type === "bold") return `<strong>${escapeHtml(token.value)}</strong>`;
+      if (token.type === "link") {
+        const href = token.href.startsWith("/")
+          ? `${SITE.origin}${token.href}`
+          : token.href;
+        return `<a href="${escapeHtml(href)}">${escapeHtml(token.value)}</a>`;
+      }
+      return escapeHtml(token.value);
+    })
+    .join("");
+}
+
+/**
+ * An article's body rendered to HTML.
+ *
+ * This is the reason post bodies are data rather than JSX: crawlers behind the
+ * answer engines do not run JavaScript, so without this they would receive a
+ * headline and an empty container. Block for block it produces the same content
+ * PostBody.jsx renders — they must not diverge, or the page is cloaking.
+ */
+function bodyToHtml(body) {
+  const out = [];
+
+  for (const block of body) {
+    switch (block.type) {
+      case "h2":
+        out.push(`<h2>${escapeHtml(block.text)}</h2>`);
+        break;
+      case "h3":
+        out.push(`<h3>${escapeHtml(block.text)}</h3>`);
+        break;
+      case "p":
+        out.push(`<p>${inlineToHtml(block.text)}</p>`);
+        break;
+      case "ul":
+      case "ol": {
+        const items = block.items
+          .map((item) => `<li>${inlineToHtml(item)}</li>`)
+          .join("");
+        out.push(`<${block.type}>${items}</${block.type}>`);
+        break;
+      }
+      case "figure":
+        out.push(
+          `<figure><img src="${escapeHtml(block.src)}" alt="${escapeHtml(block.alt)}" width="${block.width}" height="${block.height}" />` +
+            (block.caption ? `<figcaption>${escapeHtml(block.caption)}</figcaption>` : "") +
+            `</figure>`
+        );
+        break;
+      case "callout":
+        out.push(
+          `<aside><h3>${escapeHtml(block.title)}</h3><p>${inlineToHtml(block.text)}</p></aside>`
+        );
+        break;
+      case "table": {
+        const head = block.headers
+          .map((header) => `<th scope="col">${escapeHtml(header)}</th>`)
+          .join("");
+        const rows = block.rows
+          .map(
+            (row) =>
+              `<tr>${row.map((cell) => `<td>${inlineToHtml(cell)}</td>`).join("")}</tr>`
+          )
+          .join("");
+        out.push(`<table><thead><tr>${head}</tr></thead><tbody>${rows}</tbody></table>`);
+        break;
+      }
+      case "quote":
+        out.push(
+          `<blockquote><p>${inlineToHtml(block.text)}</p>` +
+            (block.attribution ? `<footer>${escapeHtml(block.attribution)}</footer>` : "") +
+            `</blockquote>`
+        );
+        break;
+      default:
+        break;
+    }
+  }
+
+  return out.join("\n      ");
+}
+
+/** An article's body as plain prose, for llms.txt. */
+function bodyToText(body) {
+  const lines = [];
+
+  for (const block of body) {
+    switch (block.type) {
+      case "h2":
+      case "h3":
+        lines.push("", `${block.type === "h2" ? "###" : "####"} ${block.text}`, "");
+        break;
+      case "p":
+        lines.push(toPlainText(block.text), "");
+        break;
+      case "ul":
+      case "ol":
+        for (const item of block.items) lines.push(`- ${toPlainText(item)}`);
+        lines.push("");
+        break;
+      case "callout":
+        lines.push(`${block.title}: ${toPlainText(block.text)}`, "");
+        break;
+      case "table":
+        lines.push(block.headers.join(" | "));
+        for (const row of block.rows) {
+          lines.push(row.map((cell) => toPlainText(cell)).join(" | "));
+        }
+        lines.push("");
+        break;
+      case "quote":
+        lines.push(`> ${toPlainText(block.text)}`, "");
+        break;
+      case "figure":
+        lines.push(`[Figure: ${block.alt}]`, "");
+        break;
+      default:
+        break;
+    }
+  }
+
+  return lines.join("\n");
 }
 
 /**
@@ -91,7 +227,15 @@ function noscriptFor(route) {
     `<p>${escapeHtml(route.description)}</p>`,
   ];
 
-  if (route.summary) parts.push(`<p>${escapeHtml(route.summary)}</p>`);
+  if (route.post) {
+    const { post } = route;
+    parts.push(
+      `<p>By ${escapeHtml(post.author)} · <time datetime="${post.datePublished}">${post.datePublished}</time> · ${post.readingTime} min read</p>`,
+      bodyToHtml(post.body)
+    );
+  } else if (route.summary) {
+    parts.push(`<p>${escapeHtml(route.summary)}</p>`);
+  }
 
   if (route.faq?.length) {
     parts.push("<h2>Frequently Asked Questions</h2>");
@@ -197,12 +341,39 @@ function llmsTxt() {
     );
   }
 
-  const withFaq = INDEXABLE_ROUTES.filter((route) => route.faq?.length);
+  const withFaq = INDEXABLE_ROUTES.filter(
+    (route) => route.faq?.length && !route.post
+  );
   if (withFaq.length) {
     lines.push("", "## Questions and answers", "");
     for (const route of withFaq) {
       lines.push(`### ${route.title}`, "");
       for (const item of route.faq) {
+        lines.push(`**${item.q}**`, "", item.a, "");
+      }
+    }
+  }
+
+  // Articles are included in full. An answer engine that cannot run JavaScript
+  // can read the entire piece from this file alone.
+  const posts = INDEXABLE_ROUTES.filter((route) => route.post);
+  if (posts.length) {
+    lines.push("", "## Articles", "");
+    for (const route of posts) {
+      const { post } = route;
+      lines.push(
+        `## ${post.title}`,
+        "",
+        `Source: ${absoluteUrl(route.path)}`,
+        `Author: ${post.author} · Published: ${post.datePublished}`,
+        "",
+        post.description,
+        "",
+        bodyToText(post.body),
+        "#### Frequently asked questions",
+        ""
+      );
+      for (const item of post.faq || []) {
         lines.push(`**${item.q}**`, "", item.a, "");
       }
     }

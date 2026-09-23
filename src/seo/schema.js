@@ -9,6 +9,12 @@
  */
 
 import { SITE, SOCIAL_PROFILES, absoluteUrl } from "./siteConfig.js";
+import {
+  POSTS,
+  POST_BY_SLUG,
+  postPath,
+  wordCount,
+} from "../content/posts/index.js";
 
 const ORG_ID = `${SITE.origin}/#organization`;
 const WEBSITE_ID = `${SITE.origin}/#website`;
@@ -94,8 +100,12 @@ export function breadcrumbSchema(route) {
   let accumulated = "";
   for (const segment of segments) {
     accumulated += `/${segment}`;
-    const match = ROUTE_TITLES[accumulated];
-    crumbs.push({ name: match || titleCase(segment), path: accumulated });
+    // A post's crumb uses its real headline, not a title-cased slug.
+    const name =
+      ROUTE_TITLES[accumulated] ||
+      POST_BY_SLUG[segment]?.title ||
+      titleCase(segment);
+    crumbs.push({ name, path: accumulated });
   }
 
   return {
@@ -125,6 +135,60 @@ export function serviceSchema(route) {
   };
 }
 
+export function blogPostingSchema(route) {
+  const post = route.post;
+  if (!post) return null;
+
+  const url = absoluteUrl(route.path);
+  return {
+    "@type": "BlogPosting",
+    "@id": `${url}#article`,
+    headline: post.title,
+    description: post.description,
+    url,
+    mainEntityOfPage: { "@id": `${url}#webpage` },
+    datePublished: post.datePublished,
+    dateModified: post.dateModified || post.datePublished,
+    wordCount: wordCount(post),
+    inLanguage: SITE.lang,
+    keywords: post.tags,
+    author: { "@type": "Organization", "@id": ORG_ID, name: post.author },
+    publisher: { "@id": ORG_ID },
+    // Google's Article structured data does not accept SVG, so this points at
+    // the PNG generate-og-images.mjs rasterises from the same hero diagram.
+    image: route.ogImage
+      ? {
+          "@type": "ImageObject",
+          url: `${SITE.origin}${route.ogImage}`,
+          width: 1200,
+          height: 630,
+        }
+      : undefined,
+  };
+}
+
+export function blogSchema(route) {
+  if (!route.isBlogIndex) return null;
+
+  const url = absoluteUrl(route.path);
+  return {
+    "@type": "Blog",
+    "@id": `${url}#blog`,
+    url,
+    name: route.title,
+    description: route.description,
+    publisher: { "@id": ORG_ID },
+    inLanguage: SITE.lang,
+    blogPost: POSTS.map((post) => ({
+      "@type": "BlogPosting",
+      "@id": `${absoluteUrl(postPath(post))}#article`,
+      headline: post.title,
+      url: absoluteUrl(postPath(post)),
+      datePublished: post.datePublished,
+    })),
+  };
+}
+
 /**
  * FAQPage. Only ever built from route.faq, which is the same array the visible
  * FaqSection renders — structured data describing invisible content is a
@@ -151,6 +215,8 @@ export function graphForRoute(route) {
     webPageSchema(route),
     breadcrumbSchema(route),
     serviceSchema(route),
+    blogSchema(route),
+    blogPostingSchema(route),
     faqSchema(route),
   ].filter(Boolean);
 
@@ -158,6 +224,7 @@ export function graphForRoute(route) {
 }
 
 const ROUTE_TITLES = {
+  "/blog": "Blog",
   "/services": "Services",
   "/services/ai-automation": "AI Automation",
   "/services/crm-development": "Custom CRM Development",

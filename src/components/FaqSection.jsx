@@ -11,12 +11,20 @@ import { ROUTE_BY_PATH } from "../seo/siteConfig.js";
  * readable to crawlers that do not run scripts, which is the whole point for
  * answer engines.
  */
-export default function FaqSection({ heading = "Frequently Asked Questions" }) {
+export default function FaqSection({
+  heading = "Frequently Asked Questions",
+  excludePosts = false,
+}) {
   const { pathname } = useLocation();
   const normalized =
     pathname !== "/" && pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;
-  const faq = ROUTE_BY_PATH[normalized]?.faq;
+  const route = ROUTE_BY_PATH[normalized];
 
+  // Blog posts render their own FAQ mid-article, before the closing CTA, so the
+  // copy in Layout stands down for them rather than repeating it at the bottom.
+  if (excludePosts && route?.post) return null;
+
+  const faq = route?.faq;
   if (!faq?.length) return null;
 
   return (

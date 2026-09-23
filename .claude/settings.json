@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(curl -sI \"https://www.aivonixflow.com/sitemap.xml\")",
+      "Bash(xxd)",
+      "Bash(curl -s -A \"Mozilla/5.0 \\(compatible; Googlebot/2.1; +http://www.google.com/bot.html\\)\" -o /dev/null -w \"status:%{http_code} type:%{content_type} size:%{size_download}\\\\n\" \"https://www.aivonixflow.com/sitemap.xml\")",
+      "Read(//c/Users/Hp/AppData/Local/Temp/previews/**)",
+      "Bash(node --input-type=module -e ' *)"
     ]
   }
 }

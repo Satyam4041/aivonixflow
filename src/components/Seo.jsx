@@ -19,7 +19,7 @@ export default function Seo() {
 
   const route = ROUTE_BY_PATH[normalized] || NOT_FOUND_META;
   const canonical = absoluteUrl(route.canonical || route.path);
-  const ogImage = `${SITE.origin}${SITE.ogImage}`;
+  const ogImage = `${SITE.origin}${route.ogImage || SITE.ogImage}`;
 
   return (
     <>
@@ -36,13 +36,19 @@ export default function Seo() {
         />
       )}
 
-      <meta property="og:type" content="website" />
+      <meta property="og:type" content={route.ogType || "website"} />
       <meta property="og:site_name" content={SITE.name} />
       <meta property="og:locale" content={SITE.locale} />
       <meta property="og:url" content={canonical} />
       <meta property="og:title" content={route.title} />
       <meta property="og:description" content={route.description} />
       <meta property="og:image" content={ogImage} />
+      {route.post && (
+        <>
+          <meta property="article:published_time" content={route.post.datePublished} />
+          <meta property="article:modified_time" content={route.post.dateModified} />
+        </>
+      )}
 
       <meta name="twitter:card" content={SITE.twitterCard} />
       <meta name="twitter:title" content={route.title} />

@@ -8,6 +8,8 @@
  *      sitemap.xml, robots.txt and llms.txt.
  */
 
+import { POSTS, BLOG_BASE, postPath } from "../content/posts/index.js";
+
 export const SITE = {
   name: "AivonixFlow",
   legalName: "AivonixFlow",
@@ -78,7 +80,7 @@ export const AI_CRAWLERS = [
  * - `faq` renders a visible FAQ block AND FAQPage structured data; the two must
  *   stay in sync or the markup is spam.
  */
-export const ROUTES = [
+const PAGE_ROUTES = [
   {
     path: "/",
     title: "AivonixFlow — AI Automation, Custom CRM & Software Development Agency",
@@ -362,6 +364,41 @@ export const ROUTES = [
       "Security posture, data handling, access control and retention practices.",
   },
 ];
+
+/**
+ * Blog routes are derived from the posts themselves rather than hand-listed, so
+ * adding an article to src/content/posts is the only step needed: sitemap,
+ * prerendering, canonical handling and llms.txt all follow from this.
+ */
+const BLOG_ROUTES = [
+  {
+    path: BLOG_BASE,
+    title: "Blog — AI Automation, CRM & AI Search | AivonixFlow",
+    description:
+      "Practical writing on AI automation, custom CRM systems and getting cited by AI answer engines. No fluff, no recycled listicles.",
+    priority: 0.8,
+    changefreq: "weekly",
+    isBlogIndex: true,
+    summary:
+      "Index of AivonixFlow articles on AI automation, CRM systems and answer engine optimisation.",
+  },
+  ...POSTS.map((post) => ({
+    path: postPath(post),
+    title: post.title,
+    description: post.description,
+    priority: 0.7,
+    changefreq: "monthly",
+    post,
+    summary: post.description,
+    faq: post.faq,
+    // Rasterised from the hero SVG by scripts/generate-og-images.mjs, because
+    // social platforms will not render an SVG card.
+    ogImage: `/blog/og/${post.slug}.png`,
+    ogType: "article",
+  })),
+];
+
+export const ROUTES = [...PAGE_ROUTES, ...BLOG_ROUTES];
 
 /** Routes that belong in sitemap.xml. */
 export const INDEXABLE_ROUTES = ROUTES.filter(

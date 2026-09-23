@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="1200" height="700" role="img" aria-labelledby="t d" font-family="Outfit, 'Segoe UI', system-ui, sans-serif">
+  <title id="t">The same lead handled manually versus by an automated pipeline</title>
+  <desc id="d">Side by side comparison of one inbound lead. The manual path passes through five human steps across roughly nineteen hours, with three points where the lead can be dropped. The automated path runs the same five steps in about forty seconds with no handoffs, and escalates to a human only when confidence is low.</desc>
+
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0A0E17"/>
+      <stop offset="1" stop-color="#05070D"/>
+    </linearGradient>
+    <linearGradient id="accent2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#00D2FF"/>
+      <stop offset="0.5" stop-color="#378ADD"/>
+      <stop offset="1" stop-color="#7B61FF"/>
+    </linearGradient>
+    <linearGradient id="autoCol" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#378ADD" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#534AB7" stop-opacity="0.06"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="700" fill="url(#bg2)"/>
+
+  <text x="64" y="66" fill="#FFFFFF" font-size="32" font-weight="700">One lead, two pipelines</text>
+  <text x="64" y="98" fill="#94A3B8" font-size="16">The steps do not disappear. They stop needing a person.</text>
+
+  <!-- ============ MANUAL COLUMN ============ -->
+  <rect x="64" y="132" width="508" height="484" rx="18" fill="#0E1524" stroke="#FFFFFF" stroke-opacity="0.08"/>
+
+  <rect x="88" y="156" width="104" height="28" rx="14" fill="#64748B" fill-opacity="0.16"/>
+  <text x="104" y="175" fill="#94A3B8" font-size="13" font-weight="700" letter-spacing="0.8">MANUAL</text>
+  <text x="418" y="176" fill="#94A3B8" font-size="26" font-weight="700">~19 hrs</text>
+
+  <g>
+    <!-- step 1 -->
+    <circle cx="112" cy="222" r="14" fill="#64748B" fill-opacity="0.18" stroke="#64748B" stroke-opacity="0.5"/>
+    <text x="107" y="227" fill="#94A3B8" font-size="12" font-weight="700">1</text>
+    <text x="142" y="218" fill="#FFFFFF" font-size="15.5" font-weight="600">Form lands in an inbox</text>
+    <text x="142" y="236" fill="#64748B" font-size="12.5">Nobody is watching it at 9pm</text>
+    <text x="470" y="226" fill="#94A3B8" font-size="13.5" font-weight="600">8 hrs</text>
+    <path d="M112 240 L112 262" stroke="#64748B" stroke-opacity="0.4" stroke-width="2"/>
+
+    <!-- step 2 -->
+    <circle cx="112" cy="284" r="14" fill="#64748B" fill-opacity="0.18" stroke="#64748B" stroke-opacity="0.5"/>
+    <text x="107" y="289" fill="#94A3B8" font-size="12" font-weight="700">2</text>
+    <text x="142" y="280" fill="#FFFFFF" font-size="15.5" font-weight="600">Someone retypes it into the CRM</text>
+    <text x="142" y="298" fill="#64748B" font-size="12.5">Typos, missing fields, wrong owner</text>
+    <text x="470" y="288" fill="#94A3B8" font-size="13.5" font-weight="600">6 min</text>
+    <path d="M112 302 L112 324" stroke="#64748B" stroke-opacity="0.4" stroke-width="2"/>
+
+    <!-- step 3 -->
+    <circle cx="112" cy="346" r="14" fill="#64748B" fill-opacity="0.18" stroke="#64748B" stroke-opacity="0.5"/>
+    <text x="107" y="351" fill="#94A3B8" font-size="12" font-weight="700">3</text>
+    <text x="142" y="342" fill="#FFFFFF" font-size="15.5" font-weight="600">Research the company by hand</text>
+    <text x="142" y="360" fill="#64748B" font-size="12.5">Tabs, LinkedIn, guesswork</text>
+    <text x="470" y="350" fill="#94A3B8" font-size="13.5" font-weight="600">12 min</text>
+    <path d="M112 364 L112 386" stroke="#64748B" stroke-opacity="0.4" stroke-width="2"/>
+
+    <!-- step 4 -->
+    <circle cx="112" cy="408" r="14" fill="#64748B" fill-opacity="0.18" stroke="#64748B" stroke-opacity="0.5"/>
+    <text x="107" y="413" fill="#94A3B8" font-size="12" font-weight="700">4</text>
+    <text x="142" y="404" fill="#FFFFFF" font-size="15.5" font-weight="600">Decide who should own it</text>
+    <text x="142" y="422" fill="#64748B" font-size="12.5">Waits for a manager to reply</text>
+    <text x="470" y="412" fill="#94A3B8" font-size="13.5" font-weight="600">4 hrs</text>
+    <path d="M112 426 L112 448" stroke="#64748B" stroke-opacity="0.4" stroke-width="2"/>
+
+    <!-- step 5 -->
+    <circle cx="112" cy="470" r="14" fill="#64748B" fill-opacity="0.18" stroke="#64748B" stroke-opacity="0.5"/>
+    <text x="107" y="475" fill="#94A3B8" font-size="12" font-weight="700">5</text>
+    <text x="142" y="466" fill="#FFFFFF" font-size="15.5" font-weight="600">First reply goes out</text>
+    <text x="142" y="484" fill="#64748B" font-size="12.5">Competitor replied hours ago</text>
+    <text x="470" y="474" fill="#94A3B8" font-size="13.5" font-weight="600">7 hrs</text>
+  </g>
+
+  <rect x="88" y="518" width="460" height="74" rx="12" fill="#64748B" fill-opacity="0.10" stroke="#64748B" stroke-opacity="0.25"/>
+  <text x="108" y="544" fill="#94A3B8" font-size="13" font-weight="700" letter-spacing="0.8">3 PLACES A LEAD GETS LOST</text>
+  <text x="108" y="566" fill="#64748B" font-size="13">Unwatched inbox · transcription error · ownership</text>
+  <text x="108" y="584" fill="#64748B" font-size="13">limbo. Each one is silent — nothing alerts you.</text>
+
+  <!-- ============ AUTOMATED COLUMN ============ -->
+  <rect x="628" y="132" width="508" height="484" rx="18" fill="url(#autoCol)" stroke="#378ADD" stroke-opacity="0.4" stroke-width="1.5"/>
+
+  <rect x="652" y="156" width="124" height="28" rx="14" fill="#00D2FF" fill-opacity="0.15"/>
+  <text x="668" y="175" fill="#00D2FF" font-size="13" font-weight="700" letter-spacing="0.8">AUTOMATED</text>
+  <text x="972" y="176" fill="#00D2FF" font-size="26" font-weight="700">~40 sec</text>
+
+  <g>
+    <circle cx="676" cy="222" r="14" fill="#00D2FF" fill-opacity="0.18" stroke="#00D2FF" stroke-opacity="0.6"/>
+    <text x="671" y="227" fill="#00D2FF" font-size="12" font-weight="700">1</text>
+    <text x="706" y="218" fill="#FFFFFF" font-size="15.5" font-weight="600">Webhook fires on submit</text>
+    <text x="706" y="236" fill="#64748B" font-size="12.5">No inbox, no waiting</text>
+    <text x="1034" y="226" fill="#00D2FF" font-size="13.5" font-weight="600">instant</text>
+    <path d="M676 240 L676 262" stroke="#378ADD" stroke-opacity="0.6" stroke-width="2"/>
+
+    <circle cx="676" cy="284" r="14" fill="#00D2FF" fill-opacity="0.18" stroke="#00D2FF" stroke-opacity="0.6"/>
+    <text x="671" y="289" fill="#00D2FF" font-size="12" font-weight="700">2</text>
+    <text x="706" y="280" fill="#FFFFFF" font-size="15.5" font-weight="600">Agent writes the record</text>
+    <text x="706" y="298" fill="#64748B" font-size="12.5">Same fields, every time</text>
+    <text x="1034" y="288" fill="#00D2FF" font-size="13.5" font-weight="600">3 sec</text>
+    <path d="M676 302 L676 324" stroke="#378ADD" stroke-opacity="0.6" stroke-width="2"/>
+
+    <circle cx="676" cy="346" r="14" fill="#378ADD" fill-opacity="0.22" stroke="#378ADD" stroke-opacity="0.6"/>
+    <text x="671" y="351" fill="#378ADD" font-size="12" font-weight="700">3</text>
+    <text x="706" y="342" fill="#FFFFFF" font-size="15.5" font-weight="600">Enrichment APIs called</text>
+    <text x="706" y="360" fill="#64748B" font-size="12.5">Firmographics, intent signals</text>
+    <text x="1034" y="350" fill="#00D2FF" font-size="13.5" font-weight="600">20 sec</text>
+    <path d="M676 364 L676 386" stroke="#378ADD" stroke-opacity="0.6" stroke-width="2"/>
+
+    <circle cx="676" cy="408" r="14" fill="#7B61FF" fill-opacity="0.22" stroke="#7B61FF" stroke-opacity="0.6"/>
+    <text x="671" y="413" fill="#7B61FF" font-size="12" font-weight="700">4</text>
+    <text x="706" y="404" fill="#FFFFFF" font-size="15.5" font-weight="600">Scored and routed by rule</text>
+    <text x="706" y="422" fill="#64748B" font-size="12.5">Your rules, written down once</text>
+    <text x="1034" y="412" fill="#00D2FF" font-size="13.5" font-weight="600">2 sec</text>
+    <path d="M676 426 L676 448" stroke="#378ADD" stroke-opacity="0.6" stroke-width="2"/>
+
+    <circle cx="676" cy="470" r="14" fill="#7B61FF" fill-opacity="0.22" stroke="#7B61FF" stroke-opacity="0.6"/>
+    <text x="671" y="475" fill="#7B61FF" font-size="12" font-weight="700">5</text>
+    <text x="706" y="466" fill="#FFFFFF" font-size="15.5" font-weight="600">Reply sent, owner notified</text>
+    <text x="706" y="484" fill="#64748B" font-size="12.5">Before they close the tab</text>
+    <text x="1034" y="474" fill="#00D2FF" font-size="13.5" font-weight="600">15 sec</text>
+  </g>
+
+  <rect x="652" y="518" width="460" height="74" rx="12" fill="#378ADD" fill-opacity="0.10" stroke="#378ADD" stroke-opacity="0.35"/>
+  <text x="672" y="544" fill="#00D2FF" font-size="13" font-weight="700" letter-spacing="0.8">A HUMAN IS STILL IN THE LOOP</text>
+  <text x="672" y="566" fill="#94A3B8" font-size="13">Low-confidence extractions and edge cases escalate</text>
+  <text x="672" y="584" fill="#94A3B8" font-size="13">to a person. Automation absorbs volume, not judgement.</text>
+
+  <text x="64" y="656" fill="#64748B" font-size="13">aivonixflow.com · Where AI meets automation</text>
+  <rect x="64" y="668" width="120" height="3" rx="1.5" fill="url(#accent2)"/>
+</svg>

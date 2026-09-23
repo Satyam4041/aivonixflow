@@ -34,6 +34,7 @@ const servicesLinks = [
 const companyLinks = [
   { name: "Home", path: "/" },
   { name: "All Services", path: "/services" },
+  { name: "Blog", path: "/blog" },
   { name: "Get a Quote", path: "/get-quote" },
   { name: "Free AI Audit", path: "/free-audit" },
   { name: "Security & Trust", path: "/security" },

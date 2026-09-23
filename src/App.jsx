@@ -16,6 +16,8 @@ import ContactPage from "./pages/ContactPage";
 import GetQuotePage from "./pages/GetQuotePage";
 import FreeAuditPage from "./pages/FreeAuditPage";
 import SecurityPage from "./pages/SecurityPage";
+import BlogIndexPage from "./pages/BlogIndexPage";
+import BlogPostPage from "./pages/BlogPostPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
 function AnimatedRoutes() {
@@ -134,6 +136,22 @@ function AnimatedRoutes() {
             element={
               <PageTransition>
                 <SecurityPage />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="blog"
+            element={
+              <PageTransition>
+                <BlogIndexPage />
+              </PageTransition>
+            }
+          />
+          <Route
+            path="blog/:slug"
+            element={
+              <PageTransition>
+                <BlogPostPage />
               </PageTransition>
             }
           />
